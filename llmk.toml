@@ -1,0 +1,39 @@
+# custom sequence
+sequence = ["latex", "bibtex", "commandindex", "packageindex", "wordindex", "latex", "latex"]
+
+# select source
+source = "latexmacro.tex"
+
+# latex
+[programs.latex]
+command = "lualatex"
+args = "%T"
+
+# bibtex
+[programs.bibtex]
+command = "biber"
+args = "%B.bcf"
+
+# commandindex
+[programs.commandindex]
+command = "upmendex"
+args = ["%B.cidx", "-sindex.ist", "-o%B.cind"]
+opts = "-g"
+
+# packageindex
+[programs.packageindex]
+command = "upmendex"
+args = ["%B.pidx", "-sindex.ist", "-o%B.pind"]
+opts = "-g"
+
+# environmentindex
+[programs.environmentindex]
+command = "upmendex"
+args = ["%B.eidx", "-sindex.ist", "-o%B.eind"]
+opts = "-g"
+
+# wordindex
+[programs.wordindex]
+command = "upmendex"
+args = ["%B.widx", "-sindex.ist", "-o%B.wind"]
+opts = "-g"

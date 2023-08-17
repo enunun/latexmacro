@@ -1,0 +1,16 @@
+\NewDocumentCommand\paren{sm}{%
+    \IfBooleanTF{#1}{%
+        \mathopen{}(#2)\mathclose{}%
+    }%
+    {%
+        \mathopen{}\left( #2 \right)\mathclose{}%    
+    }%
+}
+\NewDocumentCommand\apply{smm}{%
+    \IfBooleanTF{#1}{%
+        #2\paren*{#3}%
+    }%
+    {%
+        #2\paren{#3}
+    }%
+}

@@ -1,0 +1,126 @@
+\chapter{マクロの作り方} \label{chap:macromethod}
+
+\section{新しいコマンドの定義} \label{sec:defcmd}
+
+新しいコマンドを定義する場合，%
+\cs{NewDocumentCommand}%
+\index[cidx]{NewDocumentCommand@\cs{NewDocumentCommand}}
+コマンドを用いるのがよい%
+\footnote{%
+もしかしたら%
+\cs{def}%
+\index[cidx]{def@\cs{def}}%
+や%
+\cs{newcommand}%
+\index[cidx]{newcommand@\cs{newcommand}}
+%
+の方が見慣れているかもしれないが，基本的には
+\cs{NewDocumentCommand}コマンドを用いるべきである．
+\cs{def}は{\TeX}レベルの制御綴で，\cs{newcommand}は
+\cs{NewDocumentCommand}よりも機能が劣っているとみなせるからである．
+}%
+．
+
+\cs{NewDocumentCommand}コマンドは新しめの環境であれば追加パッケージを読み込むことなく使えるが，
+そうでない場合は
+\package{xparse}%
+\index[pidx]{xparse@\package{xparse}}%
+パッケージを読み込めば使用可能になる．
+
+\cs{NewDocumentCommand}コマンドを使って新しいコマンドを定義する場合，（普通は）プリアンブルで以下のように記述する：
+\inputonly{samplecode/newdocumentcommand}
+あるいは，最初の「\cs{}\meta{command name}」の部分をかっこでくくって
+\inputonly{samplecode/newdocumentcommandwithbrace}
+のように記述してもよい．
+どちらも意味は同じで
+「\meta{argument specification}という引数仕様のコマンド\cs{}\meta{command name}を，\meta{definition}と定義した」ということになる．
+これにより，ソース中の「\cs{}\meta{command name}」は「\meta{definition}」に置き換えて解釈される．
+
+\cs{NewDocumentCommand}コマンドが引数として要求している「引数仕様」とは，
+定義したい「\cs{}\meta{command name}」がどのような引数をもつかを記述するものである．
+よく使うものを\cref{tab:specification}に示す．
+
+\begin{table}[htbp]
+	\centering
+	\caption{\cs{NewDocumentCommand}コマンドでよく使う引数仕様の一覧，複数の引数をもつコマンドを定義する場合，順番に並べて記述する．}
+	\label{tab:specification}
+	\begin{tabular}{ccc}
+		\toprule
+		記号 & 意味 \\ \midrule
+        \lstinline|m| & 必須引数 \\
+        \lstinline|o| & オプション引数（既定値なし） \\
+        \lstinline|O|\metamarg{default value} & オプション引数（既定値が\meta{default value}） \\
+        \lstinline|s| & スター（「\lstinline|*|」）の有無を判定 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+指定した引数には\meta{definition}の部分で，登場順に「\lstinline|#1|」や「\lstinline|#2|」のようにアクセスできる．
+
+引数仕様に「\lstinline|s|」を指定した場合，
+この引数には「\lstinline|*|」の有無を示すフラグが付与される．
+使用時には「\cs{}\meta{cmd}\cmd{*}\metamarg{second argument}」
+のように記述する．第1引数が「\lstinline|*|」のみ指定可能なオプション引数になったイメージである．
+
+引数仕様に「\lstinline|s|」を指定した場合，その引数を使って処理を分岐させることができる．
+そのために役に立つのが
+\cs{IfBooleanTF}%
+\index[cidx]{IfBooleanTF@\cs{IfBooleanTF}}%
+コマンドである．
+このコマンドは
+\inputonly{samplecode/IfBooleanTF}
+のように使用する．「\lstinline|*|」がある場合には\meta{true expression}が，
+ない場合には\meta{false expression}がそれぞれ実行される．
+このようにして，あるコマンドの「亜種」とも呼ぶべき\lstinline|*|付きのコマンドを簡単に定義できる．
+
+{\LaTeX}における\cs{providecommand}コマンドのように，
+「そのコマンドが定義済みでない場合のみ定義を行い，定義済みの場合は何もしない」という処理を行うための
+\cs{ProvideDocumentCommand}%
+\index[cidx]{ProvideDocumentCommand@\cs{ProvideDocumentCommand}}%
+コマンドも存在する．
+使い方はまったく同じで
+\inputonly{samplecode/providedocumentcommand}
+のように使用する．「\meta{argument specification}」の部分も\cs{NewDocumentCommand}コマンドとまったく同じである．
+
+\section{新しい環境の定義} \label{sec:defenv}
+
+新しい環境を定義する場合，
+\cs{NewDocumentEnvironment}%
+\index[cidx]{NewDocumentEnvironment@\environment{NewDocumentEnvironment}}%
+コマンドを用いる．
+このコマンドは
+\inputonly{samplecode/newdocumentenvironment}
+のように使用する．これにより「\meta{argument specification}という引数仕様の\meta{environment name}環境を，開始時に
+\meta{begin process}を，終了時に\meta{end process}を行う環境として定義した」ということになる．
+引数仕様の部分はもちろん\cs{NewDocumentCommand}のものとほぼ同じである%
+\footnote{%
+引数仕様の「\lstinline|s|」は，\cs{NewDocumentEnvironment}コマンドで使用した場合には挙動が異なる．
+詳細は\package{xparse}パッケージのドキュメントを参照せよ．
+}%
+．
+
+
+\section{既存の定義の書き換え} \label{sec:renew}
+
+既存のコマンドの定義を書き換える場合，
+\cs{RenewDocumentCommand}%
+\index[cidx]{RenewDocumentCommand@\cs{RenewDocumentCommand}}%
+コマンドを用いるとよい．
+使い方はやはり\cs{NewDocumentCommand}コマンドとまったく同じである．
+異なるのは，\cs{NewDocumentCommand}コマンドでは定義対象となるコマンドが未定義であることが要請されていたが，
+\cs{RenewDocumentCommand}コマンドではその逆で，定義対象となるコマンドが定義済みであることを要請する．
+
+\cs{NewDocumentEnvironment}コマンドについても同様に，既存の環境の定義を書き換えるための%
+\cs{RenewDocumentEnvironment}%
+\index[cidx]{RenewDocumentEnvironment@\cs{RenewDocumentEnvironment}}%
+コマンドが存在する．
+
+「定義対象が定義済みであろうとなかろうと問答無用で定義を行う」という処理を行うための%
+\cs{DeclareDocumentCommand}%
+\index[cidx]{DeclareDocumentCommand@\cs{DeclareDocumentCommand}}%
+コマンドや%
+\cs{DeclareDocumentEnvironment}%
+\index[cidx]{DeclareDocumentEnvironment@\cs{DeclareDocumentEnvironment}}%
+コマンドも存在する．
+しかし，これらは「定義済みとは知らずにうっかり上書きしてしまった」というリスクがあるため，
+どうしても必要な場合以外は使用を控えるのが望ましい．

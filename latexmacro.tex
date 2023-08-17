@@ -1,0 +1,445 @@
+\documentclass[10pt, a5j, ]{ltjsbook} % lualatex
+
+\usepackage{caption}
+\usepackage{subcaption}
+\renewcommand{\thesubfigure}{\alph{subfigure}}
+
+\makeatletter
+\captionsetup{compatibility=false}
+\captionsetup{%
+	format = plain,
+	labelsep = quad,
+	font = small,
+	skip = .2\baselineskip,
+	width = .85\linewidth,
+	subrefformat = parens,
+	skip = 5\jsc@mpt
+}
+\captionsetup[subfigure]{%
+	labelformat = parens,
+	labelsep = space
+}
+\makeatother
+
+%\input{samplecode/funcparen}
+
+%%%%%%%%=========package=============%%%%%%%%%%%%%
+%
+\usepackage[no-math]{luatexja-fontspec}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont[Ligatures=TeX]{Libertinus Serif}
+\setsansfont[Ligatures=TeX]{Libertinus Sans}
+\setmathfont{Libertinus Math}[math-style=ISO, bold-style=ISO]
+\setmathfont{TeX Gyre Pagella Math}[range=bb]
+\DeclareFontFamily{OML}{nxlmi}{\skewchar \font =127}
+\DeclareFontShape{OML}{nxlmi}{m}{it}{
+	<-6.3>  nxlmi035
+	<6.3-8.6> nxlmi037
+	<8.6->  nxlmi03
+}{}
+\DeclareSymbolFont{gletters}{OML}{nxlmi}{m}{it}
+\DeclareMathSymbol{g}{\mathalpha}{gletters}{`g}
+%\setmonofont{HackGen}
+%\setmonojfont{HackGen}
+\usepackage[HaranoAji]{luatexja-preset}
+\ltjsetparameter{jacharrange={-2,-3}}
+\usepackage{amsthm} 
+\usepackage[draft]{graphicx} 
+\usepackage{booktabs} 
+\usepackage{diffcoeff} 
+\usepackage{wrapfig} 
+\usepackage{enumitem} 
+\usepackage{multienum} 
+\usepackage[binary-units = true]{siunitx} 
+\usepackage{index} 
+\usepackage{comment} 
+\usepackage{framed} 
+\usepackage{listings} 
+\usepackage{pxrubrica}
+\usepackage{luatexja-ruby}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[listings, breakable]{tcolorbox}
+\usepackage{dirtree}
+\usepackage[edges]{forest}
+\forestset{%
+	for forest={graw'=0, draw, folder}%
+}
+
+\usepackage{bxtexlogo} 
+\bxtexlogoimport{*,**}
+
+\delimitershortfall = -.5pt 
+%
+\graphicspath{{./fig/}}
+%
+%
+%%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
+%
+\setlist[description, 1]{%
+  style = nextline%
+}
+%
+%%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
+%
+%
+\theoremstyle{definition}
+\newtheorem{Ex}{例}[section]
+\newtheorem{Note}{注意}[section]
+%
+%%%%%%%%%%%====================== logo =================%%%%%%%%%%%%
+%
+\providecommand\upLaTeX{up\LaTeX}
+\providecommand\TeXLive{{\TeX} Live}
+\providecommand\WTeX{W32\TeX}
+\providecommand\MacTeX{Mac\TeX}
+%
+%%%%%%%%%%%%%%%=============index=====================%%%%%%%%%%%%%
+%
+\newindex{cidx}{cidx}{cind}{コマンド索引}
+\newindex{pidx}{pidx}{pind}{パッケージ・クラス索引}
+\newindex{eidx}{eidx}{eind}{環境索引}
+\newindex{widx}{widx}{wind}{用語索引}
+%
+%
+%
+%%%%%%%%%%%%%================== name ===============%%%%%%%%%%%%%
+%
+%
+\NewDocumentCommand\Word{}{Word}
+\NewDocumentCommand\MSWord{}{MS Word}
+\NewDocumentCommand\LOWriter{}{LibreOffice Writer}
+\NewDocumentCommand\ichitarou{}{一太郎}
+\NewDocumentCommand\indesign{}{InDesign}
+\NewDocumentCommand\neovim{}{Neovim}
+\NewDocumentCommand\roff{}{roff}
+\NewDocumentCommand\html{}{HTML}
+\NewDocumentCommand\css{}{CSS}
+\ProvideDocumentCommand\SATySFi{}{SATySFi}
+\NewDocumentCommand\cpp{}{%
+  C\nolinebreak\hspace{-.05em}\raisebox{.18ex}{\textbf{+}}%
+  \nolinebreak\hspace{-.14em}\raisebox{.18ex}{\textbf{+}}%
+}
+
+\NewDocumentCommand\Windows{}{Windows}
+\NewDocumentCommand\MacOS{}{MacOS}
+\NewDocumentCommand\Linux{}{Linux}
+\NewDocumentCommand\UNIX{}{UNIX}
+
+\NewDocumentCommand\Excel{}{Excel}
+\NewDocumentCommand\tlmgr{}{tlmgr}
+\NewDocumentCommand\PowerShell{}{PowerShell}
+\NewDocumentCommand\WSL{}{WSL}
+\NewDocumentCommand\TeXworks{}{{\TeX}Works}
+\NewDocumentCommand\TeXShop{}{{\TeX}Shop}
+\NewDocumentCommand\TeXDS{}{{\TeX} Directory Structure}
+\NewDocumentCommand\TDS{}{TDS}
+\NewDocumentCommand\TeXUsersGroup{}{{\TeX} Users Group}
+\NewDocumentCommand\TUG{}{TUG}
+\NewDocumentCommand\CTeXArchive{}{Comprehensive {\TeX} Archive Network}
+\NewDocumentCommand\CTAN{}{CTAN}
+\NewDocumentCommand\LaTeXProject{}{{\LaTeX} Project}
+\NewDocumentCommand\TeXdoc{}{{\TeX}doc}
+\NewDocumentCommand\Kpathsea{}{Kpathsea}
+\NewDocumentCommand\lsR{}{\lstinline{ls-R}}
+\NewDocumentCommand\mktexlsr{}{mktexlsr}
+\NewDocumentCommand\GhostScript{}{GhostScript}
+
+\NewDocumentCommand\VStudioCode{}{Visual Studio Code}
+\NewDocumentCommand\VSCode{}{VS Code}
+\NewDocumentCommand\Vim{}{Vim}
+\NewDocumentCommand\SublimeText{}{Sublime Text}
+\NewDocumentCommand\Atom{}{Atom}
+\NewDocumentCommand\Acrobat{}{Adobe Acrobat Reader DC}
+\NewDocumentCommand\Evince{}{Evince}
+\NewDocumentCommand\Okular{}{Okular}
+\NewDocumentCommand\Skim{}{Skim}
+\NewDocumentCommand\SumatraPDF{}{SumatraPDF}
+\NewDocumentCommand\Inkscape{}{Inkscape}
+\NewDocumentCommand\gnuplot{}{gnuplot}
+\NewDocumentCommand\llmk{}{llmk}
+%
+%%%%%%%%%%%%%%%%%%=====================macro==================%%%%%%%%%%%%%%%%%%%%%%
+%
+\NewDocumentCommand\bs{}{\textbackslash}
+\NewDocumentCommand\mathbstt{}{$\fontspec{HackGen}\text{\textbackslash}$}
+\NewDocumentCommand\command{m}{%
+	\mathbstt%
+	$\text{\texttt{#1}}$%
+}
+\NewDocumentCommand\mathasttt{}{$\fontspec{HackGen}\text{{*}}$}
+\NewDocumentCommand\option{m}{\texttt{#1}}
+
+\NewDocumentCommand\cs{s m}{%
+	\IfBooleanTF{#1}{%
+		\command{#2}\mathasttt%
+	}{%
+	\command{#2}%
+	}%
+}
+\NewDocumentCommand\environment{m}{\texttt{#1}}
+\NewDocumentCommand\env{m}{\environment{#1}}
+\NewDocumentCommand\package{m}{\texttt{#1}}
+\NewDocumentCommand\ltxclass{m}{\texttt{#1}}
+\NewDocumentCommand\term{m}{\textgt{\textbf{#1}}}
+%\RenewDocumentCommand{\emph}{m}{\textbf{\textgt{#1}}}
+\NewDocumentCommand\envvar{m}{\texttt{#1}}
+\NewDocumentCommand\dir{m}{$\text{\lstinline{#1}}$}
+\NewDocumentCommand\cmd{m}{\texttt{#1}}
+\NewDocumentCommand\register{m}{\cs{#1}}
+\NewDocumentCommand\filename{m}{\texttt{#1}}
+\NewDocumentCommand\meta{m}{$\langle${\normalfont\itshape#1}$\rangle$}
+\NewDocumentCommand\marg{m}{$\fontspec{HackGen}\text{\textbraceleft\texttt{#1}\textbraceright}$}
+\NewDocumentCommand\metamarg{m}{$\fontspec{HackGen}\text{\textbraceleft\meta{#1}\textbraceright}$}
+\NewDocumentCommand\oarg{m}{$\fontspec{HackGen}\text{[\texttt{#1}]}$}
+\NewDocumentCommand\metaoarg{m}{$\fontspec{HackGen}\text{[\meta{#1}]}$}
+\NewDocumentCommand\parg{m}{$\fontspec{HackGen}\text{\texttt{(#1)}}$}
+\NewDocumentCommand\metaparg{m}{$\fontspec{HackGen}\text{\texttt{(\meta{#1})}}$}
+\NewDocumentCommand\Unicodenumber{m}{\texttt{U+#1}}
+\NewDocumentCommand\keyvaluemethod{}{\meta{key}{=}\meta{value}}
+\NewDocumentCommand\key{m}{\option{#1}}
+
+\NewDocumentEnvironment{directorytree}{}{\center\forest for tree={grow'=0, draw, folder, font=\ttfamily}}{\endforest\endcenter}
+
+
+%%%%%%%%%%%===========listings===============%%%%%%%%%%%%%%%%
+
+\lstdefinestyle{latexsample}{%
+  language={[LaTeX]TeX},%
+  frame=none,
+  basicstyle={\footnotesize\ttfamily},%
+  identifierstyle={\small\ttfamily},%
+  commentstyle={\small\ttfamily},%
+  keywordstyle={\small\ttfamily},%
+  stringstyle={\small\ttfamily},%
+  breaklines=true,
+  numbers=left,%
+  numbersep=6pt,
+  numberstyle={\footnotesize\upshape\ttfamily},%
+  escapeinside="",%
+  breakindent=0pt,
+  tabsize = 2
+}%
+
+\lstset{%
+	basicstyle = {\ttfamily},%
+	tabsize = 4,%
+}
+
+\newlength\defaultindent
+\setlength\defaultindent{\parindent}
+
+\newtcbinputlisting[]{\sampleinput}[2][]{%
+	listing file =#2, listing options = {style={latexsample},},
+	colback = white,
+	before lower = {\setlength\parindent{\defaultindent}}, after upper = {\vspace{-1.5mm}\tcbsubtitle{Output}},%
+	breakable, toprule at break = 0mm, bottomrule at break = 0mm, topsep at break = 2mm,%
+	title = {Input}, lower separated = false, middle = 0mm, top=-1mm, boxsep=1mm, leftlower = 1mm, right = 1mm, bottom = 1mm,%
+	sharp corners = all, after={}, #1%
+}
+
+\newtcbinputlisting[]{\inputonly}[2][]{%
+	listing file =#2, listing options = {style=latexsample}, listing only, colback = white,%
+	before lower = {\setlength\parindent{\defaultindent}}, after upper = {},%
+	breakable, toprule at break = 0mm, bottomrule at break = 0mm, topsep at break = 2mm,%
+	title = {Source Code}, lower separated = false, middle = 0mm, top=-1mm, boxsep=1mm, leftlower = 1mm, right = 1mm, bottom = -1mm,%
+	sharp corners = all, after={}, #1%
+}
+
+\makeatletter
+\newtcbinputlisting[]{\sampleinputspacevisible}[2][]{%
+	listing file =#2, listing options = {style={latexsample},showspaces=true, showtabs = true,, tabsize = 4},
+	colback = white,
+	before upper = {\def\lst@visiblespace{\normalfont\textvisiblespace}\ignorespaces},%
+	before lower = {\setlength\parindent{\defaultindent}}, after upper = {\vspace{-1.5mm}\tcbsubtitle{Output}},%
+	breakable, toprule at break = 0mm, bottomrule at break = 0mm, topsep at break = 2mm,%
+	title = {Input}, lower separated = false, middle = 0mm, top=-1mm, boxsep=1mm, leftlower = 1mm, right = 1mm, bottom = 1mm,%
+	sharp corners = all, after={}, #1%
+}
+
+\newtcbinputlisting[]{\inputonlyspacevisible}[2][]{%
+	listing file =#2, listing options = {style={latexsample}, showspaces = true, showtabs = true}, listing only, colback = white,%
+	before = {\def\lst@visiblespace{\textvisiblespace}},%
+	before lower = {\setlength\parindent{\defaultindent}}, after upper = {},%
+	breakable, toprule at break = 0mm, bottomrule at break = 0mm, topsep at break = 2mm,%
+	title = {Source Code}, lower separated = false, middle = 0mm, top=-1mm, boxsep=1mm, leftlower = 1mm, right = 1mm, bottom = -1mm,%
+	sharp corners = all, after={}, #1%
+}
+\makeatother
+
+\lstdefinestyle{console}{%
+  language=sh,%
+  basicstyle={\color{white}\footnotesize\ttfamily},%
+  identifierstyle={\small},%
+  commentstyle={\small},%
+  keywordstyle={\small},%
+  stringstyle={\small},%
+  frame={single},%
+  breaklines=true,
+  backgroundcolor = \color{black},
+  escapeinside={!!},
+  showtabs = false,
+  tabsize=1,
+}
+
+
+\newtcblisting{console}{%
+	listing options={style=console},%
+	listing only, every listing line = {\small\footnotesize\$},%
+	boxrule=0mm,
+	colback = black, colframe = black, coltext = white, sharp corners = all, after = {}, frame empty,%
+	middle = 0mm, top=0mm, boxsep=0mm, left = 0mm, right = 0mm, bottom = -3mm,%
+}
+
+\makeatletter
+\@addtoreset{footnote}{section}
+\makeatother
+
+%%
+%%%%%%%%%%%%%%========hyperref============%%%%%%%%%%
+%
+\usepackage[unicode, pdfusetitle, hidelinks, draft = true]{hyperref} % hyperlink
+
+\hypersetup{% setting hyperref
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  bookmarkstype=toc,
+  pdfborder={0 0 0},
+  colorlinks = true,
+}
+\usepackage{footnotebackref}
+%
+%
+%%%%%%%==============crossreference================%%%%%%%%%%
+%
+\usepackage[nameinlink]{cleveref}
+\crefname{figure}{図}{図}
+\Crefname{figure}{図}{図}
+\crefformat{chapter}{#2第#1章#3}
+\Crefformat{chapter}{#2第#1章#3}
+\crefrangeformat{chapter}{#3第#1#4章から#5第#2#6章}
+\Crefrangeformat{chapter}{#3第#1#4章から#5第#2#6章}
+\crefname{page}{p.}{p.}
+\Crefname{page}{p.}{p.}
+\crefname{Ex}{例}{例}
+\Crefname{Ex}{例}{例}
+\crefname{table}{表}{表}
+\Crefname{table}{表}{表}
+\crefname{section}{\presectionname}{\presectionname}
+\Crefname{section}{\presectionname}{\presectionname}
+\crefname{subsection}{\presubsectionname}{\presubsectionname}
+\Crefname{subsection}{\presubsectionname}{\presubsectionname}
+\crefrangeformat{section}{#3\presectionname#1#4から#5\presectionname#2#6}
+\Crefrangeformat{section}{#3\presectionname#1#4から#5\presectionname#2#6}
+\crefrangeformat{subsection}{#3\presubsectionname#1#4から#5\presubsectionname#2#6}
+\Crefrangeformat{subsection}{#3\presubsectionname#1#4から#5\presubsectionname#2#6}
+
+%
+%
+%%%%%%%======biblatex=============%%%%%%%%%%
+%
+\usepackage[%
+backend = biber,%
+url = false,%
+doi = false,%
+eprint = false,%
+isbn = false,%
+style = numeric-comp%
+]{biblatex} % use "biblatex"
+\DeclareFieldFormat*{title}{\mkbibquote{#1}}
+\DeclareDelimFormat{labelnamepunct}{\addcomma\addspace}
+\DeclareFieldFormat{url}{\url{#1}}
+\addbibresource{reference/book.bib}
+%\addbibresource{reference/online.bib}
+
+\makeatletter
+\renewcommand{\section}{%
+  \if@slide\clearpage\fi
+  \@startsection{section}{1}{\z@}%
+  {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
+  {.5\Cvs \@plus.3\Cdp}% 後アキ
+  %   {\normalfont\Large\headfont\@secapp}}
+  {\normalfont\Large\headfont\presectionname\raggedright}%
+}
+\renewcommand{\subsection}{%
+  \@startsection{subsection}{2}{\z@}%
+  {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
+  {.5\Cvs \@plus.3\Cdp}% 後アキ
+  {\normalfont\large\headfont\presubsectionname}%
+}
+\makeatother
+\renewcommand{\presectionname}{\S}
+\newcommand{\presubsectionname}{\S\S}
+\setcounter{tocdepth}{2}
+%
+%
+
+
+%%%%%%%%%%%%%%%===========index============%%%%%%%%%%%
+
+\NewDocumentCommand\symbolindexname{}{記号}
+
+\usepackage{needspace}
+
+\makeatletter
+\NewDocumentCommand\idxhead{m}{%
+  \needspace{2\baselineskip}%
+  \vspace{\baselineskip}%
+  \def\hrulefill{\leavevmode\leaders\hrule height 0.8pt\hfill\kern\z@}%
+  \hbox to \columnwidth{\hfil%
+    \normalsize%
+    \textcolor{gray}{\raisebox{.15ex}{■}}\hspace{.5\zw}\textsf{#1}\hspace{.5\zw}\textcolor{gray}{\raisebox{.15ex}{■}}\hfil}\vspace{-4.5mm}\hrulefill\par%
+  \nopagebreak%
+}
+\makeatother
+%
+
+
+%\includeonly{contents/markup}
+%\includeonly{contents/macro}
+
+
+
+\begin{document}
+%
+%\begin{titlepage}
+%	\title{構造化マークアップ志向の{\LaTeX}入門}
+%	\author{野口匠}
+%	\date{2022年12月27日}
+%	\maketitle
+%\end{titlepage}
+%
+%
+%
+\frontmatter % introduction
+%
+\include{contents/intro}
+%
+\tableofcontents
+%
+%
+\mainmatter
+%
+\include{contents/base}
+%\include{contents/base}
+\include{contents/analysis}
+\include{contents/general}
+\include{contents/example}
+%\include{contents/equation}
+%\include{contents/tipsexample}
+%
+
+\backmatter
+\nocite{*}
+\printbibliography[title=参考文献,heading=bibintoc]
+
+
+\printindex[cidx]
+%\printindex[pidx]
+%\printindex[eidx]
+\printindex[widx]
+
+\include{contents/colophon}
+
+\end{document}

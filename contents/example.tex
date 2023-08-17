@@ -1,0 +1,86 @@
+\chapter{実践例} \label{chap:ex}
+
+\section{単純な例} \label{sec:simple}
+
+まずは単純な例から始めよう．
+
+\begin{Ex} \label{Ex:cppnewdocumentcommand}
+    \Cref{Ex:cpp}で述べた\cs{cpp}コマンドは次のように定義できる：
+    \inputonly{samplecode/cppdef}
+    \cs{NewDocumentCommand}コマンドの第2引数である引数仕様を空にしておくことで，
+    引数を持たないコマンドを定義できる．
+    本文中では「\cs{cpp}」とのみ記述すればよいので，保守性や可読性の向上が見込める．
+\end{Ex}
+
+\Cref{Ex:changedef}で述べた\cs{emph}コマンドの再定義を考えよう．
+
+\begin{Ex} \label{Ex:emphbfdef}
+    \cs{emph}コマンドの振る舞いを\cs{textbf}コマンドと同じようにしたければ，
+    いっそのこと\cs{textbf}コマンドと同じ挙動にしてしまえばいい．
+    つまり，
+    \inputonly{samplecode/emphbfdef}
+    のようにしてしまえばいい．
+    こうすれば，\cs{emph}\marg{hoge}と書くのと\cs{textbf}\marg{hoge}と書くのが等価になる．
+    振る舞いを\cs{textbf}コマンドと同じにしたうえで本文中では「\cs{emph}\marg{hoge}」のままにしておくことで，
+    「この箇所は強調である」という意図がはっきりと残る．
+\end{Ex}
+
+\section{数式が関わる例} \label{sec:math}
+
+数式が関わる文脈では，構造化マークアップはよりその力を発揮する．
+
+\begin{Ex} \label{Ex:number}
+    実数全体の集合\(\symbb{R}\)を記述する際，よく見るのは（\package{amsmath}パッケージ読み込み時では）「\cs{mathbb}\marg{R}と記述せよ」
+    というものである．しかし「\cs{mathbb}\marg{R}」では「Rを黒板太字で出力せよ」という意図しか伝わらない．
+    そこで
+    \inputonly{samplecode/realnumber}
+    のように定義し，本文中では「\cs{realnumbers}」と記述することで「実数全体の集合を出力せよ」という意図がはっきりと伝わる．
+    さらに，例えば
+    \package{unicode-math}%
+    \index[pidx]{unicode-math@\package{unicode-math}}%
+    パッケージを採用することを後から決めた場合，\cs{realnumber}コマンドの定義を
+    \inputonly{samplecode/realnumbersymbb}
+    と変更するだけで修正が完了する．本文中で何度実数全体の集合が登場しようと
+    修正は1箇所のみである．
+\end{Ex}
+
+\begin{Ex} \label{Ex:paren}
+    数学において，かっこは文脈に応じてさまざな意味で使われる．
+    例えば，\(x\)に関数\(f\)を適用した結果を表す「\(f(x)\)」や，項の構成順序を表す「\(a(x + y)\)」である．
+    後者に関しては明確な意味があるとは言い難いが，前者には「関数適用」という確固たる意味を有する．
+    そこで，以下のように定義してみよう：
+    \inputonly{samplecode/funcparen}
+    \lstinline|*|の有無でかっこの大きさを\cs{left}と\cs{right}で調整するかどうかを指定できる．
+
+    このように定義することで，関数適用\(f(x)\)が「\lstinline|\apply{f}{x}|」と記述できるようになる．
+    同時に，コマンド「\cs{paren}」も合わせて定義することで，項の構成順序を表す「\(a(x + y)\)」は
+    「\lstinline|a\paren{x + y}|」のように記述できる．
+    \cs{paren}コマンドを定義するのは，意図をはっきりさせるというよりむしろ複雑な実装を隠蔽するという意味が強い．
+\end{Ex}
+
+\Cref{Ex:paren}で出てきた%
+\cs{mathopen}%
+\index[cidx]{mathopen@\cs{mathopen}}%
+コマンドと
+\cs{mathclose}%
+\index[cidx]{mathclose@\cs{mathclose}}%
+コマンドについて補足しておこう．
+これらのコマンドはともに引数を1つとり，その引数をそれぞれ数式における
+開きかっこと閉じかっことして認識させるコマンドである．
+これらで\cs{left}と\cs{right}をはさむことにより，
+\cs{left}と\cs{right}に起因する余白を抑制することができる．
+
+ところで，\cs{mathopen}や\cs{mathclose}は，
+構造化マークアップがマクロを組むことだけではないことを示す好例である．
+
+\begin{Ex} \label{Ex:mathopenclose}
+    左半開区間は，
+    \(\mathopen{(}a, b \mathclose{]}\)と書かれることもあれば\(\mathopen{]}a, b\mathclose{]}\)
+    と書かれることもある．
+    とくに後者をきちんと「\lstinline|\mathopen{]} a, b \mathclose{]}|」と書くことで，
+    本来閉じかっことして振る舞う「\(\mathclose{]}\)」を開きかっことして認識させることができる．
+\end{Ex}
+
+構造化マークアップとは，自分の意図を明瞭になるようにソースを記述することを志向したマークアップの技法である．
+したがって，それを実現する手段はなんでもよい．
+マクロを組むのは多くの場合に有用な解決策であるが，それが唯一ではないのである．
